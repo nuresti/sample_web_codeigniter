@@ -3,7 +3,7 @@
 
 	/**
 	 * 
-	 */
+	 */ 
 	class M_surat_ttd extends CI_Model
 	{
 		
@@ -37,7 +37,7 @@
 		function save($data)
 		{	
 			$insert['no_nrk'] = $data['no_nrk'];
-			$insert['alamat_url'] = base_url().'ttd_digital/'.$data['alamat_url'];
+			$insert['alamat_url'] = base_url().'assets/ttd_digital/'.$data['alamat_url'];
 
 			$query = $this->db->insert('tb_kp_surat_ttd', $insert);
 		}

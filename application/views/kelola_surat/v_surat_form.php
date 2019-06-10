@@ -40,15 +40,14 @@
                     <div class="portlet light ">
                 <div class="panel-body">
                     <!-- ALERT -->
-                    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?> "></div>
-                    <?php if($this->session->flashdata('flash')): ?>
+                    <?php echo form_error('nama_surat', '<div class="alert alert-danger" role="alert">', '</div>');?>
 
-                    <?php endif; ?>
+                    <?php echo $this->session->flashdata('message'); ?>
                 <div class="col-xs-2">
                 
                 </div>
                 <div class="col-xs-8">
-                <form action="<?php echo base_url()."c_surat_form"; ?>" method="POST" enctype="" role="form" id="form_surat">
+                <form action="<?php echo base_url()."c_surat_form/ks_add_surat_digital"; ?>" method="POST" enctype="" role="form" id="form_surat">
                 <div class="panel-body">
                     <div class="form-group">    
                       <label>Jenis Surat</label>
@@ -58,7 +57,7 @@
                             foreach ($data_jenis as $dj)
                             {
                          ?>
-                        <option value="<?php echo $dj->id ?> "><?php echo $dj->nama_surat ?> / <?php echo $dj->nama ?></option>
+                        <option value="<?php echo $dj->id_jenis_surat ?> "><?php echo $dj->nama_surat ?> / <?php echo $dj->nama ?></option>
                         <?php 
                             }
                          ?>
@@ -172,3 +171,14 @@
 <!-- END CONTAINER -->
 </div>
 </div>
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+    $('.summernote').summernote({
+        height:300
+      });
+    //$('.select_nrk').select2();
+      $('.select').select2({});
+  });
+
+</script>

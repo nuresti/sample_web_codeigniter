@@ -53,25 +53,9 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                        	<!-- ALERT -->
-					<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?> "></div>
-					<?php if($this->session->flashdata('flash')): ?>
-
-					<?php endif; ?>
                             <div class="table-toolbar">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="btn-group">
-                                        <a data-toggle="modal" data-target="#m_modal_1" class="btn btn-primary">
-							<span>
-								<i class="fa fa-user-plus"></i>
-								<span>
-									Tambah Baru
-								</span>
-							</span>
-						</a>
-                                    </div>
-                                </div>
+                                <div class="col-md-6"> </div>
                                 <div class="col-md-6">
                                     <div class="btn-group pull-right">
                                         <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">Tools

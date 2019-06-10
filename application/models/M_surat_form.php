@@ -1,7 +1,7 @@
 <?php 
 	defined("BASEPATH") or exit("'No direct script access allowed");
 	/**
-	 * 
+	 *  
 	 */
 	class M_surat_form extends CI_Model
 	{
@@ -24,6 +24,7 @@
 			$query = $this->db->query("
 				SELECT 
 					a.id_jenis_surat,
+					a.nama,
 					a.isian_surat,
 					b.nama_surat
 				FROM tb_kp_surat_master a

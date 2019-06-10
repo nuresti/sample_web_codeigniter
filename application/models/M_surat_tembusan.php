@@ -11,7 +11,7 @@
 		{
 			parent::__construct();
 			
-		}
+		} 
 
 		function get_all_data()
 		{

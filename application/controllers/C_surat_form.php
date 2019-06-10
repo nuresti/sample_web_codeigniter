@@ -5,7 +5,7 @@
 	 */
 	class C_surat_form extends CI_Controller
 	{
-		
+		 
 		function __construct()
 		{
 			parent::__construct();
@@ -20,7 +20,7 @@
 			$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 			// $data['data_mitra'] = $this->M_surat_form->get_data_koperasi();
 			$data['data_jenis'] = $this->M_surat_form->get_jenis_surat();
-			$data['data_ttd'] = $this->M_surat_form->get_data_ttd();
+			// $data['data_ttd'] = $this->M_surat_form->get_data_ttd();
 			$this->load->view('partials/header', $data);
 			$this->load->view('kelola_surat/v_surat_form', $data);
 			$this->load->view('partials/footer');

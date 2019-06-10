@@ -133,7 +133,7 @@
 									<td><?php echo $is->isian_surat; ?></td>
 									<td>
 										 <a class="" data-toggle="modal" data-target="#edit_<?php echo $is->id; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
-										 <a href="<?php echo base_url()."kartu_piutang/laporan_pdf"; ?>" target="_blank"><button type="button" class="btn btn-success"><i class="fa fa-file"></i></button></a>
+										 <a href="<?php echo base_url("c_laporan/pdf_default/").$is->id; ?>" target="_blank"><button type="button" class="btn btn-success"><i class="fa fa-file"></i></button></a>
                                     	<a class="" data-toggle="modal" data-target="#delete_<?php echo $is->id; ?>"><button class="btn btn-danger remove"><i class="fa fa-trash-o"></i></button></a>
 									</td>
 								</tr>

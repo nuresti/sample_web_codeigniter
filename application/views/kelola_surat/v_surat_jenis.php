@@ -191,7 +191,7 @@
         <!-- DELETE -->
         <div class="modal fade" id="delete_<?php echo $sj->id_jenis_surat ?>" tabindex="-1" role="basic" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class= "modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Delete Menu</h4>

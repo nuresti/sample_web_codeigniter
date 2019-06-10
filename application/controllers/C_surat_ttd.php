@@ -1,7 +1,7 @@
 <?php 
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	/**
-	 * 
+	 *  
 	 */
 	class C_surat_ttd extends CI_Controller
 	{
@@ -28,7 +28,7 @@
 		public function ks_surat_ttd_list()
 		{
 
-			$data = $this->M_surat_ttd->get_all_data();
+			$data['surat_ttd'] = $this->M_surat_ttd->get_all_data();
 
 			header('Content-Type: application/json');
 	    	$data = json_encode($data);
@@ -38,103 +38,130 @@
 
 		public function ks_add_ttd()
 		{
+			$data['title'] = 'Surat Tanda Tangan';
 			$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-			//upload gambar
-			unset($config);
-			$config['upload_path'] = './ttd_digital/';
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['max_size'] = 100;
-			$config['max_width'] = 1024;
-			$config['max_height'] = 768;
+			$this->form_validation->set_rules('no_nrk', 'No NRK', 'required|trim');
 
-			$this->load->library('upload', $config);
+			if($this->form_validation->run() == false){
 
-			$this->upload->initialize($config);
-			if (!$this->upload->do_upload('alamat_url'))
-			{
-				echo $this->upload->display_errors();
+				$this->load->view('partials/header', $data);
+				$this->load->view('kelola_surat/v_surat_ttd', $data);
+				$this->load->view('partials/footer');
 
-			}else
-			{
-				$upload_data = $this->upload->data();
-				$data['no_nrk'] = $this->input->post('no_nrk');
-				$data['alamat_url'] = $upload_data['file_name'];
+			}else{
 
-				var_dump($data);
-				die;
-				//store to db
-			
-				$result= $this->M_surat_ttd->save($data);;
-	            echo json_decode($result);
+					$config['upload_path'] = 'assets/ttd_digital/';
+					$config['allowed_types'] = 'gif|jpg|png';
+					$config['max_size'] = 2048;
+					$config['max_width'] = 1024;
+					$config['max_height'] = 768;
 
+					$this->load->library('upload', $config);
+
+					// $this->upload->initialize($config);
+
+					if (!$this->upload->do_upload('alamat_url'))
+					{
+						echo $this->upload->display_errors();
+
+					}else
+					{
+						// $old_image = $data['user']['alamat_url'];
+						// unlink(FCPATH . 'assets/ttd_digital/' . $old_image);
+
+						$data['alamat_url'] = $this->upload->data('file_name');
+						$data['no_nrk'] = $this->input->post('no_nrk');
+
+						// var_dump($data);
+						// die;
+						//store to db
+					
+					 	$this->M_surat_ttd->save($data);
+
+					}
+
+				// $this->db->where('email', $email2);
+				// $this->db->insert('user');
+
+				$this->session->set_flashdata('message', 
+					'<script type="text/javascript">
+                        $(document).ready(function(){
+                        	swal("Berhasil!", "Data Berhasil disimpan" , "success");
+                        })
+                    </script>');
+					redirect('c_surat_ttd');
 			}
 
-			header('Content-Type: application/json');
-	    	$data = json_encode($data);
-	    	echo $data;
+			
 		}
 
 		public function ks_update_ttd()
 		{
+			$data['title'] = 'Surat Tanda Tangan';
 			$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-			$data['no_nrk'] = $this->input->post('no_nrk');
 			$id = $this->input->post('id_ttd');
-			$old_photo = $this->input->post('old');
-			if($_FILES['alamat_url']['name'] != "")
-			{
-					//upload gambar
+			$no_nrk = $this->input->post('no_nrk');
+			$upload_image = $_FILES['alamat_url']['name'];
+				
+
+			if($upload_image)
+			{ 
 				unset($config);
-				$config['upload_path'] = './ttd_digital/';
+				$config['upload_path'] = 'assets/ttd_digital/';
 				$config['allowed_types'] = 'gif|jpg|png';
-				$config['max_size'] = 100;
+				$config['max_size'] = 2048;
 				$config['max_width'] = 1024;
 				$config['max_height'] = 768;
 
 				$this->load->library('upload', $config);
+
 				if (!$this->upload->do_upload('alamat_url'))
 				{
 					echo $this->upload->display_errors();
-					$data['alamat_url'] = base_url().'ttd_digital/'.$old_photo;
+
 				}else
 				{
+
+					$old_image = $this->input->post('old');
+					unlink(FCPATH . 'assets/ttd_digital/' . $old_image);
+
 					$upload_data = $this->upload->data();
 
-					$data['alamat_url']= base_url().'ttd_digital/'.$upload_data['file_name'];
+					
+					$alamat_url= base_url().'assets/ttd_digital/'.$upload_data['file_name'];
+
+					
+					$this->db->set('alamat_url', $alamat_url);
 				}
 			}
-			else
-			{
-					
-					$data['alamat_url'] = $old_photo;
-
-			}
+					$this->db->set('no_nrk', $no_nrk);
 					$this->db->where('id_ttd', $id);
-					$this->db->update('tb_kp_surat_ttd', $data);
+					$this->db->update('tb_kp_surat_ttd');
+
+					$this->session->set_flashdata('message', 
+					'<script type="text/javascript">
+                        $(document).ready(function(){
+                        	swal("Berhasil!", "Data Berhasil diubah" , "success");
+                        })
+                    </script>');
 
 					redirect('c_surat_ttd');
 		}
 
-		public function ks_delete_ttd($id)
+		public function ks_delete_ttd()
 		{
-			$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
-			// $file = base_url().'ttd_digital/'.$href;
-
-			// if (is_readable($file) && unlink($file)){
-				
-
-			// 	echo "The file has been deleted";
-
-			// }else{
-			// 	echo "The file was not found or not readable and could not be deleted";
-			// }
+			$id = $this->input->post('id_ttd');
 			$this->db->where('id_ttd', $id);
-				$this->db->delete('tb_kp_surat_ttd');
+			$this->db->delete('tb_kp_surat_ttd');
 
-				echo 'Deleted Successfully' ;
-			
+			$this->session->set_flashdata('message', 
+				'<script type="text/javascript">
+	                $(document).ready(function(){
+	                	swal("Berhasil!", "Data Berhasil dihapus" , "success");
+	                })
+	            </script>');
 
 			redirect('c_surat_ttd');
 		}

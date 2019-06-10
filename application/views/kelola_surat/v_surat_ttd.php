@@ -7,7 +7,7 @@
 <!-- BEGIN CONTENT BODY -->
 <!-- BEGIN PAGE HEAD-->
 <div class="page-head">
-<div class="container">
+<div class="container"> 
     <!-- BEGIN PAGE TITLE -->
     <div class="page-title">
         <h1>Master Tanda Tangan Surat
@@ -53,11 +53,10 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                        	<!-- ALERT -->
-					<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?> "></div>
-					<?php if($this->session->flashdata('flash')): ?>
+                        <!-- ALERT -->
+                            <?php echo form_error('no_nrk', '<div class="alert alert-danger" role="alert">', '</div>');?>
 
-					<?php endif; ?>
+                           <?php echo $this->session->flashdata('message'); ?>
                             <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
@@ -104,16 +103,24 @@
                           <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="show_data">  
+                    <tbody id="show_data">
+                        <?php 
+                            $no = 1;
+                            foreach ($ttd_digital as $st) {
+                            ?>
+                            <tr id="<?php echo $st->id_ttd; ?>">
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $st->no_nrk; ?></td>
+                                <td> <img src="<?php echo $st->alamat_url; ?>" width="100"></td>
+                                <td>
+                                    <a class="" data-toggle="modal" data-target="#edit_<?php echo $st->id_ttd; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
+                                    <a class="" data-toggle="modal" data-target="#delete_<?php echo $st->id_ttd; ?>"><button class="btn btn-danger remove"><i class="fa fa-trash-o"></i></button></a>
+                                </td>
+                            </tr>
+                            <?php  
+                        }
+                        ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                          <th>No</th>
-                          <th>NRK</th>
-                          <th>Alamat URL</th>
-                          <th>Action</th>
-                        </tr>
-                    </tfoot>
                         </table>
                     </div>
                 </div>
@@ -121,7 +128,7 @@
                 <!-- ADD -->
                 <div class="modal fade" id="m_modal_1" tabindex="-1" role="basic" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form method="POST" id=upload_ttd>
+                        <form action="<?php echo base_url()."c_surat_ttd/ks_add_ttd"; ?>" method="POST" id=upload_ttd enctype="multipart/form-data">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -170,7 +177,7 @@
                     <!-- EDIT -->
                 <div class="modal fade" id="edit_<?php echo $td->id_ttd; ?>" tabindex="-1" role="basic" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form action="<?php echo base_url()?>kartu_piutang/ks_update_ttd" method="POST" enctype="multipart/form-data">
+                        <form action="<?php echo base_url()?>c_surat_ttd/ks_update_ttd" method="POST" enctype="multipart/form-data">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -197,12 +204,12 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <center><img src="<?php echo $td->alamat_url;?>" width="100"></center>
+                                                <label for="nama_surat">Upload TTD</label>
+                                                <input type="hidden" name="old" id="old" value="<?php echo $td->alamat_url; ?> " class="form-control">
+                                                <input type="file" name="alamat_url" id="alamat_url" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <label for="nama_surat">Upload TTD</label>
-                                                <input type="hidden" name="old" id="old" value="<?php echo $td->alamat_url ?> " class="form-control">
-                                                <input type="file" name="alamat_url" id="alamat_url" class="form-control">
+                                                <center><img src="<?php echo $td->alamat_url;?>" width="100"></center>
                                             </div>
                                         </div>
                                 </div>
@@ -217,8 +224,34 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-                <!-- ADD -->
-
+                <!-- EDIT -->
+                <!-- DELETE -->
+                <div class="modal fade" id="delete_<?php echo $td->id_ttd ?>" tabindex="-1" role="basic" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class= "modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Delete Master Tanda Tangan</h4>
+                            </div>
+                            <div class="modal-body"> 
+                                <div class="portlet-body form">
+                                    <p>Yakin akan menghapus data ini ?</p>
+                                    <form action="<?php echo base_url()?>c_surat_ttd/ks_delete_ttd" method="POST">
+                                                <input type="hidden" name="id_ttd" id="id_ttd" value="<?php echo $td->id_ttd; ?>">
+                                    
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn red">Hapus</button>
+                            </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- DELETE -->
                 <?php } ?>
 
                 <!-- /.modal -->
@@ -237,74 +270,74 @@
 </div>
 </div>
 <script>
-    $(document).ready(function() {
-        // $('.select_nrk').select2();
+    // $(document).ready(function() {
+    //     // $('.select_nrk').select2();
 
-        tampil_data();  
+    //     tampil_data();  
          
-        $('#data_ttd').dataTable();
+    //     $('#data_ttd').dataTable();
           
-        //FUNGSI TAMPIL DATA
-        function tampil_data(){
-            $.ajax({
-                type  : 'ajax',
-                url   : '<?php echo base_url()."c_surat_ttd/ks_surat_ttd_list" ?>',
-                secureuri :false,
-                fileElementId   :'userfile',
-                dataType : 'json',
-                success : function(data){
-                    var html = '';
-                    no = 1;
-                    var num =+ no;
-                    var i;
-                    for(i=0; i<data.length; i++){
-                        num = i + 1;
-                        html += '<tr>'+
-                                '<td>'+ num +'</td>'+
-                                '<td>'+data[i].no_nrk+'</td>'+
-                                '<td><img src="'+data[i].alamat_url+'" width="100"></td>'+
-                                '<td style="text-align:;">'+
-                                    '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="'+data[i].id_ttd+'"><i class="fa fa-pencil"></i></a>'+' '+
-                                    '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="'+data[i].id_ttd+'"><i class="fa fa-trash-o"></i></a>'+
-                                '</td>'+
-                                '</tr>';
-                    }
-                    $('#show_data').html(html);
-                }
+    //     //FUNGSI TAMPIL DATA
+    //     function tampil_data(){
+    //         $.ajax({
+    //             type  : 'ajax',
+    //             url   : '<?php //echo base_url()."c_surat_ttd/ks_surat_ttd_list" ?>',
+    //             secureuri :false,
+    //             fileElementId   :'userfile',
+    //             dataType : 'json',
+    //             success : function(data){
+    //                 var html = '';
+    //                 no = 1;
+    //                 var num =+ no;
+    //                 var i;
+    //                 for(i=0; i<data.length; i++){
+    //                     num = i + 1;
+    //                     html += '<tr>'+
+    //                             '<td>'+ num +'</td>'+
+    //                             '<td>'+data[i].no_nrk+'</td>'+
+    //                             '<td><img src="'+data[i].alamat_url+'" width="100"></td>'+
+    //                             '<td style="text-align:;">'+
+    //                                 '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="'+data[i].id_ttd+'"><i class="fa fa-pencil"></i></a>'+' '+
+    //                                 '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="'+data[i].id_ttd+'"><i class="fa fa-trash-o"></i></a>'+
+    //                             '</td>'+
+    //                             '</tr>';
+    //                 }
+    //                 $('#show_data').html(html);
+    //             }
  
-            });
-        }
-         //ADD SURAT JENIS
-        $('#btn_simpan').on('click',function(){
-                var no_nrk=$('#no_nrk').val();
-                var alamat_url=$('#alamat_url').val();
+    //         });
+        //}
+        //  //ADD SURAT JENIS
+        // $('#btn_simpan').on('click',function(){
+        //         var no_nrk=$('#no_nrk').val();
+        //         var alamat_url=$('#alamat_url').val();
 
-                console.log(no_nrk);
+        //         console.log(no_nrk);
                 
-                $.ajax({
-                    type : "POST",
-                    url  : "<?php echo base_url()."c_surat_ttd/ks_add_ttd"; ?>",
-                    beforeSend :function () {
-                      swal({
-                          title: 'Menunggu',
-                          html: 'Memproses data',
-                          onOpen: () => {
-                            swal.showLoading()
-                          }
-                        })      
-                      },
-                    dataType : "JSON",
-                    data : {no_nrk:no_nrk, alamat_url:alamat_url},
-                    success: function(data){
-                        $('[name="no_nrk"]').val("");
-                        $('[name="alamat_url"]').val("");
-                        $('#m_modal_1').modal('hide');
-                        swal("Added!", "Data berhasil di tambahkan.", "success");
-                        tampil_data();
-                    }
-                });
-                return false;
-            });
+        //         $.ajax({
+        //             type : "POST",
+        //             url  : "<?php //echo base_url()."c_surat_ttd/ks_add_ttd"; ?>",
+        //             beforeSend :function () {
+        //               swal({
+        //                   title: 'Menunggu',
+        //                   html: 'Memproses data',
+        //                   onOpen: () => {
+        //                     swal.showLoading()
+        //                   }
+        //                 })      
+        //               },
+        //             dataType : "JSON",
+        //             data : {no_nrk:no_nrk, alamat_url:alamat_url},
+        //             success: function(data){
+        //                 $('[name="no_nrk"]').val("");
+        //                 $('[name="alamat_url"]').val("");
+        //                 $('#m_modal_1').modal('hide');
+        //                 swal("Added!", "Data berhasil di tambahkan.", "success");
+        //                 tampil_data();
+        //             }
+        //         });
+        //         return false;
+        //     });
 
   //        //HAPUS SURAT JENIS
   //       $('#show_data').on('click','.item_hapus',function(){
@@ -369,5 +402,5 @@
   //           return false;
   //       });
 
-    });
+    //});
 </script>
