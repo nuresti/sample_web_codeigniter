@@ -114,7 +114,7 @@
 <script src="<?php echo base_url('assets/global/plugins/ie8.fix.min.js')?>"></script> 
 <![endif]-->
 <!-- BEGIN CORE PLUGINS -->
-<script src="<?php echo base_url('assets/global/plugins/jquery.min.js')?>" type="text/javascript"></script>
+
 <script src="<?php echo base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js')?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/global/plugins/js.cookie.min.js')?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
@@ -158,6 +158,7 @@
 <script type="text/javascript" src="<?php echo base_url().'assets/global/plugins/datatables/datatables.min.js'?>"></script>
 <script type="text/javascript" src="<?php echo base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js'?>"></script>
 <script src="<?php echo base_url().'assets/pages/scripts/profile.min.js" type="text/javascript'?>"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- END THEME LAYOUT SCRIPTS -->
 <script>

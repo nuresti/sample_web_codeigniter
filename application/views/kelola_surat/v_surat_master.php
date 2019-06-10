@@ -3,7 +3,7 @@
 	-- Isi Surat beisi surat master yang secara default sudah ada di dalam database
 	-- surat master tersebut hanya bisa di update oleh bagian kabag dan kadiv keuangan.
 		jika login sebagai kabag/kadiv, akan muncul tombol edit dan hapus
-
+ 
 		di action tersedia 3 tombol
 		1. tombol edit (kadiv/kabag)
 		2. tombol hapus (kadiv/kabag)
@@ -141,6 +141,50 @@
                     </div>
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
+                <!-- ADD -->
+                <div class="modal fade" id="m_modal_1" tabindex="-1" role="basic" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="<?php echo base_url()."c_surat_master/ks_add_surat_jenis"; ?>" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
+                            </div>
+                            <div class="modal-body"> 
+                                <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+											<label for="nama_surat">Nama Jenis Surat</label>
+											<select class="select_nama_surat" name="id_jenis_surat" id="id_jenis_surat">
+													  <option selected="selected">-- Pilih Opsi --</option>
+													  <?php 
+													  		foreach ($jenis_surat as $js) {
+
+													   ?>
+													   		<option value="<?php echo $js->id_jenis_surat ?>"> <?php echo $js->nama_surat ?></option>
+													   <?php 
+													   	}
+													    ?>
+											</select>
+								</div>
+						<div class="form-group">
+			                        <label for="isian_surat">Isi Surat</label>
+			                        <textarea class="summernote" name="isian_surat" id="isian_surat"></textarea>
+		                </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn green">Save changes</button>
+                            </div>
+                        </div>
+                        </form>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- ADD -->
                 <!-- Modal Tambah Master  Surat -->
 <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

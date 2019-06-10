@@ -25,6 +25,7 @@
 				
 
 			$this->form_validation->set_rules('menu', 'Menu', 'required');
+			// $this->form_validation->set_rules('nama_menu', 'Nama Menu', 'required');
 
 			if ($this->form_validation->run() == false)
 			{	
@@ -33,7 +34,7 @@
 				$this->load->view('partials/footer');
 
 			}else{
-				$this->db->insert('user_menu', ['menu' =>$this->input->post('menu')]);
+				$this->db->insert('user_menu', ['menu' => $this->input->post('menu'), 'nama_menu' => $this->input->post('nama_menu')]);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
 				  New Menu Added !
 				</div>');

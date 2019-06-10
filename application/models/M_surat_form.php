@@ -33,23 +33,23 @@
 				");
 			return $query->result();
 		}
-		public function get_data_koperasi()
-		{
-			$query = $this->db->query("
-				SELECT 
-					 a.nama_mitra,
-					 a.alamat,
-					 b.nama_prov,
-					 c.nama_lengkap_kabkot
-				FROM tb_koperasi a
-					LEFT JOIN tb_prov b
-					ON a.provinsi = b.id_prov
-					LEFT JOIN tb_kabkot c
-					ON a.kab_kot = c.id_kab
-					WHERE a.id_koperasi = '3320080.1' 
-				");
-			return $query->row();
-		}
+		// public function get_data_koperasi()
+		// {
+		// 	$query = $this->db->query("
+		// 		SELECT 
+		// 			 a.nama_mitra,
+		// 			 a.alamat,
+		// 			 b.nama_prov,
+		// 			 c.nama_lengkap_kabkot
+		// 		FROM tb_koperasi a
+		// 			LEFT JOIN tb_prov b
+		// 			ON a.provinsi = b.id_prov
+		// 			LEFT JOIN tb_kabkot c
+		// 			ON a.kab_kot = c.id_kab
+		// 			WHERE a.id_koperasi = '3320080.1' 
+		// 		");
+		// 	return $query->row();
+		// }
 		public function get_data_ttd(){
 			$query = $this->db->query("
 				SELECT

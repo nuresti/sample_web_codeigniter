@@ -41,6 +41,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <link href="<?php echo base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css'?>" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->
 <link rel="shortcut icon" href="favicon.ico" /> </head>
+
+<script src="<?php echo base_url('assets/global/plugins/jquery.min.js')?>" type="text/javascript"></script>
 <!-- END HEAD -->
 
 <body class="page-container-bg-solid">
@@ -113,7 +115,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- QUERY MENU -->
     <?php 
         $role_id = $this->session->userdata('role_id');
-        $queryMenu = "SELECT a.id, a.menu
+        $queryMenu = "SELECT a.id, a.menu, a.nama_menu
                         FROM user_menu a
                         JOIN user_access_menu b 
                         ON a.id = b.menu_id
@@ -130,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       <ul class="nav navbar-nav">
         <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown">
-            <a href="javascript:;"> <?php echo $m['menu'];  ?>
+            <a href="javascript:;"> <?php echo $m['nama_menu'];  ?>
                 <span class="arrow"></span>
             </a>
             <ul class="dropdown-menu pull-left">

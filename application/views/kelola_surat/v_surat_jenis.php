@@ -54,10 +54,9 @@
                         </div>
                         <div class="portlet-body">
                         	<!-- ALERT -->
-					<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?> "></div>
-					<?php if($this->session->flashdata('flash')): ?>
+                            <?php echo form_error('nama_surat', '<div class="alert alert-danger" role="alert">', '</div>');?>
 
-					<?php endif; ?>
+					       <?php echo $this->session->flashdata('message'); ?>
                             <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
@@ -112,9 +111,8 @@
 								<td><?php echo $no++; ?></td>
 								<td><?php echo $sj->nama_surat; ?></td>
 								<td>
-									<a data-toggle="modal" data-target="#edit_<?php echo $sj->id_jenis_surat; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
-
-									<a><button type="submit" class="btn btn-danger btn-xs remove"><i class="fa fa-trash-o"></i></button></a>
+                                    <a class="" data-toggle="modal" data-target="#edit_<?php echo $sj->id_jenis_surat; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
+                                    <a class="" data-toggle="modal" data-target="#delete_<?php echo $sj->id_jenis_surat; ?>"><button class="btn btn-danger remove"><i class="fa fa-trash-o"></i></button></a>
 								</td>
 							</tr>
 							<?php  
@@ -125,69 +123,100 @@
                     </div>
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
-                <!-- Modal Tambah Master Jenis Surat -->
-<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body p-5">
-				<div class="row">
-					<form action="<?php echo base_url()."c_surat_jenis/ks_add_surat_jenis"; ?>" method="POST">
-						<div class="form-group">
-							<label for="nama_surat">Nama Jenis Surat</label>
-							<input type="text" name="nama_surat" id="nama_surat" placeholder="Nama Jenis Surat" class="form-control">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-							<button class="btn btn-primary">Simpan</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Modal Tambah Master Jenis Surat -->
+                <!-- ADD -->
+                <div class="modal fade" id="m_modal_1" tabindex="-1" role="basic" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="<?php echo base_url()."c_surat_jenis/ks_add_surat_jenis"; ?>" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
+                            </div>
+                            <div class="modal-body"> 
+                                <div class="portlet-body form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label for="nama_surat">Nama Jenis Surat</label>
+                                                <input type="text" name="nama_surat" id="nama_surat" placeholder="Nama Jenis Surat" class="form-control">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn green">Save changes</button>
+                            </div>
+                        </div>
+                        </form>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- ADD -->
 
-<!-- Modal Update Master Jenis Surat -->
-<?php 
-	foreach ($surat_jenis as $sj) {
+        <!-- Modal Update Master Jenis Surat -->
+        <?php 
+        	foreach ($surat_jenis as $sj) {
 
- ?>
-<div class="modal fade" id="edit_<?php echo $sj->id_jenis_surat ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title" id="exampleModalLongTitle">Edit Data Jenis Surat</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body p-5">
-				<div class="row">
-					<form action="<?php echo base_url()?>c_surat_jenis/ks_update_surat_jenis" method="POST">
-						<div class="form-group">
-							<label for="nama_surat">Nama Jenis Surat</label>
-							<input type="hidden" name="id_jenis_surat" id="id_jenis_surat" value="<?php echo $sj->id_jenis_surat; ?>">
-							<input type="text" name="nama_surat" id="nama_surat" value="<?php echo $sj->nama_surat ?>" class="form-control">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-							<button type="submit" nama="submit" id="submit" class="btn btn-primary">Simpan</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<?php } ?>
-<!-- Modal Update Master Jenis Surat --> 
+         ?>
+        <div class="modal fade" id="edit_<?php echo $sj->id_jenis_surat ?>" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="<?php echo base_url()?>c_surat_jenis/ks_update_surat_jenis" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label for="nama_surat">Nama Jenis Surat</label>
+                                    <input type="hidden" name="id_jenis_surat" id="id_jenis_surat" value="<?php echo $sj->id_jenis_surat; ?>">
+                                    <input type="text" name="nama_surat" id="nama_surat" placeholder="Nama Jenis Surat" class="form-control" value="<?php echo $sj->nama_surat ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn green">Save changes</button>
+                    </div>
+                </div>
+                </form>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- DELETE -->
+        <div class="modal fade" id="delete_<?php echo $sj->id_jenis_surat ?>" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Delete Menu</h4>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="portlet-body form">
+                            <p>Yakin akan menghapus data ini ?</p>
+                            <form action="<?php echo base_url()?>c_surat_jenis/ks_delete_surat_jenis" method="POST">
+                                        <input type="hidden" name="id_jenis_surat" id="id_jenis_surat" value="<?php echo $sj->id_jenis_surat; ?>">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn red">Hapus</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- DELETE -->
+        <?php } ?>
+        <!-- Modal Update Master Jenis Surat --> 
                 <!-- /.modal -->
             </div>
         </div>

@@ -101,6 +101,7 @@
                                     </th>
                                     <th> No</th>
                                     <th> Menu </th>
+                                    <th> Nama Menu </th>
                                     <th> Actions </th>
                                 </tr>
                             </thead>
@@ -118,6 +119,7 @@
                                     </td>
                                     <td> <?php echo $no++ ?> </td>
                                     <td class="center"> <?php echo $m['menu']; ?> </td>
+                                    <td class="center"> <?php echo $m['nama_menu']; ?> </td>
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
@@ -156,9 +158,14 @@
                                     <form role="form">
                                         <div class="form-body">
                                             <div class="form-group">
-                                                <label>Nama Menu</label>
+                                                <label>Menu</label>
                                                 <input type="text" class="form-control" placeholder="Menu" id="menu" name="menu"> 
+                                                <small class="text-danger">*nama sama dengan nama controller</small>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Nama Menu</label>
+                                                <input type="text" class="form-control" placeholder="Nama Menu" id="nama_menu" name="nama_menu"> 
+                                            </div
                                         </div>
                                     </form>
                                 </div>
@@ -187,6 +194,11 @@
                                 <div class="portlet-body form">
                                     <form role="form">
                                         <div class="form-body">
+                                            <div class="form-group">
+                                                <label> Menu</label>
+                                                <input type="text" class="form-control" placeholder="" value=""> 
+                                                <small class="text-danger">*nama sama dengan nama controller</small>
+                                            </div>
                                             <div class="form-group">
                                                 <label>Nama Menu</label>
                                                 <input type="text" class="form-control" placeholder="" value=""> 

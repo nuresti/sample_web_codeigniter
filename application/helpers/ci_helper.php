@@ -35,20 +35,20 @@
 		}
 	}
 
-	function goToDefaultPage() 
-	{
-	  if ($this->session->userdata('role_id') == 1) 
-	  {
-	    redirect('admin');
+	// function goToDefaultPage() 
+	// {
+	//   if ($this->session->userdata('role_id') == 1) 
+	//   {
+	//     redirect('admin');
 
-	  } elseif ($this->session->userdata('role_id') == 2) 
-	  {
-	    redirect('user');
+	//   } elseif ($this->session->userdata('role_id') == 2) 
+	//   {
+	//     redirect('user');
 	    
-	  } else {
-	    // jika ada role_id yg lain maka tambahkan disini
-	  }
-	}
+	//   } else {
+	//     // jika ada role_id yg lain maka tambahkan disini
+	//   }
+	// }
 
 	function check_access($role_id, $menu_id)
 	{
