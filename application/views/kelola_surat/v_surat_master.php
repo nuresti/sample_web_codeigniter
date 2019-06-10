@@ -68,10 +68,12 @@
                         </div>
                         <div class="portlet-body">
                         	<!-- ALERT -->
-					<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?> "></div>
-					<?php if($this->session->flashdata('flash')): ?>
-
-					<?php endif; ?>
+                            <?php 
+                            	echo form_error('id_jenis_surat', '<div class="alert alert-danger" role="alert">', '</div>');
+                            	echo form_error('nama', '<div class="alert alert-danger" role="alert">', '</div>');
+                            	echo form_error('isian_surat', '<div class="alert alert-danger" role="alert">', '</div>');
+                            ?>
+					       <?php echo $this->session->flashdata('message'); ?>
                             <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
@@ -113,7 +115,8 @@
                             <thead>
                                 <tr>
 									<th>No</th>
-									<th>Nama Jenis Surat</th>
+									<th>Jenis Surat</th>
+									<th>Nama Surat</th>
 									<th>Isi Surat</th>
 									<th>Action</th>
 								</tr>
@@ -126,11 +129,12 @@
 								<tr id="<?php echo $is->id; ?>">
 									<td><?php echo $no++; ?></td>
 									<td><?php echo $is->nama_surat; ?></td>
+									<td><?php echo $is->nama; ?></td>
 									<td><?php echo $is->isian_surat; ?></td>
 									<td>
-										<a data-toggle="modal" data-target="#edit_<?php echo $is->id; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
-										<a href="<?php echo base_url()."kartu_piutang/laporan_pdf"; ?>" target="_blank"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-file"></i></button></a>
-										<a><button type="button" class="btn btn-danger btn-xs remove"><i class="fa fa-trash-o"></i></button></a>
+										 <a class="" data-toggle="modal" data-target="#edit_<?php echo $is->id; ?>"><button class="btn btn-info"><i class="fa fa-pencil"></i></button></a>
+										 <a href="<?php echo base_url()."kartu_piutang/laporan_pdf"; ?>" target="_blank"><button type="button" class="btn btn-success"><i class="fa fa-file"></i></button></a>
+                                    	<a class="" data-toggle="modal" data-target="#delete_<?php echo $is->id; ?>"><button class="btn btn-danger remove"><i class="fa fa-trash-o"></i></button></a>
 									</td>
 								</tr>
 								<?php  
@@ -141,114 +145,75 @@
                     </div>
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
-                <!-- ADD -->
-                <div class="modal fade" id="m_modal_1" tabindex="-1" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <form action="<?php echo base_url()."c_surat_master/ks_add_surat_jenis"; ?>" method="POST">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
-                            </div>
-                            <div class="modal-body"> 
-                                <div class="portlet-body form">
-                                        <div class="form-body">
-                                            <div class="form-group">
-											<label for="nama_surat">Nama Jenis Surat</label>
-											<select class="select_nama_surat" name="id_jenis_surat" id="id_jenis_surat">
-													  <option selected="selected">-- Pilih Opsi --</option>
-													  <?php 
-													  		foreach ($jenis_surat as $js) {
-
-													   ?>
-													   		<option value="<?php echo $js->id_jenis_surat ?>"> <?php echo $js->nama_surat ?></option>
-													   <?php 
-													   	}
-													    ?>
-											</select>
-								</div>
-						<div class="form-group">
-			                        <label for="isian_surat">Isi Surat</label>
-			                        <textarea class="summernote" name="isian_surat" id="isian_surat"></textarea>
-		                </div>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn green">Save changes</button>
-                            </div>
-                        </div>
-                        </form>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
+    <!-- ADD -->
+    <div class="modal fade" id="m_modal_1" role="basic" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form action="<?php echo base_url()."c_surat_master/ks_add_surat_master"; ?>" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
                 </div>
-                <!-- ADD -->
-                <!-- Modal Tambah Master  Surat -->
-<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Jenis Surat</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body p-5">
-				<div class="row">
-					<form action="<?php echo base_url()."c_surat_master/ks_add_surat_jenis"; ?>" method="POST">
-						<div class="form-group">
+                <div class="modal-body"> 
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="form-group">
 							<label for="nama_surat">Nama Jenis Surat</label>
-							<select class="select_nama_surat" name="id_jenis_surat" id="id_jenis_surat">
-									  <option selected="selected">-- Pilih Opsi --</option>
-									  <?php 
-									  		foreach ($jenis_surat as $js) {
+							<br>
+								<select class="select_nama_surat form-control" name="id_jenis_surat" id="id_jenis_surat">
+										  <option class="form-control" selected="selected">-- Pilih Opsi --</option>
+										  <?php 
+										  		foreach ($jenis_surat as $js) {
 
-									   ?>
-									   		<option value="<?php echo $js->id_jenis_surat ?>"> <?php echo $js->nama_surat ?></option>
-									   <?php 
-									   	}
-									    ?>
-							</select>
-						</div>
-						<div class="form-group">
-			                        <label for="isian_surat">Isi Surat</label>
-			                        <textarea class="summernote" name="isian_surat" id="isian_surat"></textarea>
-		                </div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-							<button class="btn btn-primary">Simpan</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Modal Tambah Master Jenis Surat -->
-
+										   ?>
+										   		<option value="<?php echo $js->id_jenis_surat ?>"> <?php echo $js->nama_surat ?></option>
+										   <?php 
+										   	}
+										    ?>
+								</select>
+							</div>
+							<div class="form-group">
+		                        <label for="isian_surat">Nama Surat</label>
+		                       	<input type="text" name="nama" id="nama" placeholder="Nama Surat" class="form-control">
+            				</div>
+							<div class="form-group">
+		                        <label for="isian_surat">Isi Surat</label>
+		                        <textarea class="summernote" name="isian_surat" id="isian_surat"></textarea>
+	                		</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn green">Save changes</button>
+                </div>
+            </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- ADD -->
 <!-- Modal Update Master Jenis Surat -->
 <?php 
 	foreach ($isi_surat as $is) {
 
  ?>
-<div class="modal fade" id="edit_<?php echo $is->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title" id="exampleModalLongTitle">Edit Data Surat Master</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body p-5">
-				<div class="row">
-					<form action="<?php echo base_url()?>kartu_piutang/ks_update_surat_master" method="POST">
-						<div class="form-group">
+<div class="modal fade" id="edit_<?php echo $is->id ?>" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form action="<?php echo base_url()?>c_surat_master/ks_update_surat_master" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Surat Master</h5>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class="form-group">
 							<input type="hidden" name="id" id="id" value="<?php echo $is->id; ?>">
 							<label for="nama_surat">Nama Jenis Surat</label>
-								<select class="select_nama_surat" name="id_jenis_surat" id="id_jenis_surat">
+								<select class="select_nama_surat" name="id_jenis_surat" id="id_jenis_surat2">
  
 									<option value="<?php echo $is->id_jenis_surat ?>" selected> <?php echo $is->nama_surat ?></option>
 									  
@@ -263,37 +228,54 @@
 								</select>
 						</div>
 						<div class="form-group">
-			                        <label for="isian_surat">Isi Surat</label>
-			                        <textarea class="summernote" name="isian_surat" id="isian_surat" ><?php echo $is->isian_surat ?></textarea>
+			                        <label for="isian_surat">Nama Surat</label>
+			                       	<input type="text" name="nama" id="nama2" placeholder="Nama Surat" value="<?php echo $is->nama ?>" class="form-control">
 		                </div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-							<button type="submit" nama="submit" id="submit" class="btn btn-primary">Simpan</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<?php } ?>
+						<div class="form-group">
+			                        <label for="isian_surat">Isi Surat</label>
+			                        <textarea class="summernote" name="isian_surat" id="isian_surat2" ><?php echo $is->isian_surat ?></textarea>
+		                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn green">Save changes</button>
+                    </div>
+                </div>
+                </form>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
 <!-- Modal Update Master Isi Surat --> 
-			
-<div class="row mt">
-	<div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<br/>
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-						<span>Loading</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-                <!-- /.modal -->
+<!-- DELETE -->
+        <div class="modal fade" id="delete_<?php echo $is->id ?>" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Delete Master Surat</h4>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="portlet-body form">
+                            <p>Yakin akan menghapus data ini ?</p>
+                            <form action="<?php echo base_url()?>c_surat_master/ks_delete_surat_master" method="POST">
+                            <input type="hidden" name="id" id="id" value="<?php echo $is->id; ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn red">Hapus</button>
+                    </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- DELETE -->
+<?php } ?>
             </div>
         </div>
         </div>
@@ -317,44 +299,44 @@
 				height:300
 			});
 		//$('.select_nrk').select2();
-	    $('.select_nama_surat').select2();
+	    $('.select_nama_surat').select2({});
 	});
 
 
-	$(document).ready(function(){
-		$(".remove").click(function(){
-	        var id = $(this).parents("tr").attr("id");
+	// $(document).ready(function(){
+	// 	$(".remove").click(function(){
+	//         var id = $(this).parents("tr").attr("id");
 	    
-	       swal({
-	        title: "Anda yakin akan menghapus data ini ?",
-	        text: "Data yang telah di hapus tidak bisa di kembalikan",
-	        type: "warning",
-	        showCancelButton: true,
-	        confirmButtonClass: "btn-danger",
-	        confirmButtonText: "Ya, Hapus",
-	        cancelButtonText: "Batal",
-	        closeOnConfirm: false,
-	        closeOnCancel: false
-	      },
-	      function(isConfirm) {
-	        if (isConfirm) {
-	          $.ajax({
-	             url: '<?php echo base_url() ?>kartu_piutang/ks_delete_surat_master/'+id,
-	             type: 'DELETE',
-	             error: function() {
-	                alert('Something is wrong');
-	             },
-	             success: function(data) {
-	                  $("#"+id).remove();
-	                  swal("Deleted!", "Data berhasil di Hapus.", "success");
-	             }
-	          });
-	        } else {
-	          swal("Cancelled", "Data berhasil disimpan kembali :)", "error");
-	        }
-	      });
+	//        swal({
+	//         title: "Anda yakin akan menghapus data ini ?",
+	//         text: "Data yang telah di hapus tidak bisa di kembalikan",
+	//         type: "warning",
+	//         showCancelButton: true,
+	//         confirmButtonClass: "btn-danger",
+	//         confirmButtonText: "Ya, Hapus",
+	//         cancelButtonText: "Batal",
+	//         closeOnConfirm: false,
+	//         closeOnCancel: false
+	//       },
+	//       function(isConfirm) {
+	//         if (isConfirm) {
+	//           $.ajax({
+	//              url: '<?php echo base_url() ?>kartu_piutang/ks_delete_surat_master/'+id,
+	//              type: 'DELETE',
+	//              error: function() {
+	//                 alert('Something is wrong');
+	//              },
+	//              success: function(data) {
+	//                   $("#"+id).remove();
+	//                   swal("Deleted!", "Data berhasil di Hapus.", "success");
+	//              }
+	//           });
+	//         } else {
+	//           swal("Cancelled", "Data berhasil disimpan kembali :)", "error");
+	//         }
+	//       });
 	     
-	    });
-	});
+	//     });
+	// });
     
 </script>

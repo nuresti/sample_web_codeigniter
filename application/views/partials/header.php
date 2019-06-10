@@ -39,10 +39,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <link href="<?php echo base_url('assets/summernote/dist/summernote-bs4.css')?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url('assets/global/plugins/datatables/datatables.min.css')?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url().'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css'?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url().'assets/global/plugins/select2/css/select2.min.css'?>" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->
 <link rel="shortcut icon" href="favicon.ico" /> </head>
 
 <script src="<?php echo base_url('assets/global/plugins/jquery.min.js')?>" type="text/javascript"></script>
+
 <!-- END HEAD -->
 
 <body class="page-container-bg-solid">
